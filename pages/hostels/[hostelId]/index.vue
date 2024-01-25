@@ -2,7 +2,7 @@
     <div class="page-container pt-[189px]  ">
         <div class="w-full h-full flex md:flex-row flex-col mb-10">
             <div class="left-section flex-row flex-wrap md:w-1/2 w-full">
-                <div class="info-section w-full bg-[#F4E04D] ">
+                <div class="info-section w-full bg-gray-100">
                     <h1 class="uppercase">{{ name }}</h1>
                     <div class="hostel-info">
                         <span class="info-title">Адрес:</span>
@@ -20,7 +20,7 @@
                         <span class="info-value">{{ square }} м²</span>
                     </div>
                 </div>
-                <div class="description-section bg-[#F4E04D]">
+                <div class="description-section bg-gray-100">
                     <p>{{ description }}</p>
                 </div>
             </div>
