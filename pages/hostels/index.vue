@@ -3,7 +3,7 @@
         <div class="page-container">
             <div class="h-screen mt-[-44.5px]">
                 <div class="flex flex-col justify-center h-full mt-[-45.5px]">
-                    <h1 class="">Проживание для студентов UIB</h1>
+                    <h1 class="text-white">Проживание для студентов UIB</h1>
                     <h3 class="">Ознакомьтесь с хостелами, которые предлагают наши партнеры</h3>
                 </div>
             </div>
