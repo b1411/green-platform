@@ -1,6 +1,6 @@
 <template>
-    <div class="page-container pt-[189px]  ">
-        <div class="w-full h-full flex md:flex-row flex-col mb-10">
+    <div class="page-container pt-[189px]" >
+        <div class="w-full h-full flex md:flex-row flex-col mb-10" v-if="isDataLoaded">
             <div class="left-section flex-row flex-wrap md:w-1/2 w-full">
                 <div class="info-section w-full bg-gray-100">
                     <h1 class="uppercase">{{ name }}</h1>
@@ -25,10 +25,15 @@
                 </div>
             </div>
             <div class="image-section md:w-1/2 w-full">
-                <img :src="images[0].image" alt="Hostel Image">
+                <img :src="images[0]" alt="Hostel Image">
             </div>
         </div>
-        <div class="flex w-full">
+        <div v-else class="h-[500px] flex justify-center items-center">
+            <div
+                class=" loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64">
+            </div>
+        </div>
+        <div class="flex w-full" v-if="isDataLoaded">
             <button class="mx-auto btn w-[250px] btn-primary" v-on:click="openModalForm">Оставить заявку</button>
             <ApplicationModal />
         </div>
@@ -37,17 +42,46 @@
 
 
 <script setup>
+import { HostelInfo } from '~/utils/hostels/HostelClass';
 const route = useRoute()
 
-const { data } = await useFetch(`http://127.0.0.1:8000/api/hostels/${route.params.hostelId}/`, {
-    method: 'GET',
+let data = reactive({})
+
+let name = ref('')
+let images = ref([])
+let description = ref('')
+let address = ref('')
+let price = ref('')
+let square = ref('')
+let isDataLoaded = ref(false)
+
+async function retrieveHostelInfo() {
+    const Parse = useParse();
+    const hostelQuery = new Parse.Query("Hostels");
+    const res = await hostelQuery.equalTo("objectId", route.params.hostelId).first();
+    const hostelData = new HostelInfo(res)
+    await hostelData.getImages()
+    data = { ...hostelData }
+    name.value = data.name
+    images.value = data.images
+    description.value = data.description
+    address.value = data.address
+    price.value = data.price
+    square.value = data.square
+
+}
+
+onBeforeMount(async () => {
+    await retrieveHostelInfo()
+    isDataLoaded.value = true
 })
 
-const { name, images, description, address, price, square } = data.value
+
 
 function openModalForm() {
     document.getElementById('application_modal').showModal()
 }
+
 </script>
 
 <style scoped>
@@ -86,5 +120,22 @@ p {
     @apply text-gray-500;
     line-height: 1.5;
     /* Improves readability */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader {
+    border-top-color: #3498db;
+    border-left-color: #3498db;
+    border-bottom-color: #3498db;
+    animation: spin 1s infinite linear;
 }
 </style>

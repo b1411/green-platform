@@ -12,33 +12,52 @@
     <div class="bg-base-100">
         <div class="page-container mb-10">
             <h2></h2>
-            <div v-if="data" class="flex flex-row justify-center items-center h-full">
+            <div v-if="isHostelDataLoaded" class="flex flex-row justify-center items-center h-full">
                 <div class="masonry-grid">
-                    <HostelCard v-for="hostel in data" :key="hostel.id" :hostel="hostel" />
+                    <HostelCard v-for="hostel in hostels" :key="hostel.id" :hostel="hostel" />
                 </div>
+            </div>
+            <div v-else class="flex flex-row justify-center items-center h-[500px]">
+                <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64"></div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-const { data } = await useFetch('http://127.0.0.1:8000/api/hostels/', {
-    method: 'get',
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
+
+import { HostelInfo } from '@/utils/hostels/HostelClass'
+
+let hostels = reactive([]);
+let isHostelDataLoaded = ref(false);
+
+async function retrieveHostelsInfo() {
+    const Parse = useParse();
+    const hostelsQuery = new Parse.Query("Hostels");
+    const res = await hostelsQuery.include('images').find();
+    res.map(async (hostel) => {
+        const hostelData = new HostelInfo(hostel);
+        await hostelData.getImages()
+        hostels.push({ ...hostelData })
+    })
+
+}
+
+onBeforeMount(async () => {
+    await retrieveHostelsInfo()
+    isHostelDataLoaded.value = true
+    console.log(hostels)
+    isHeaderTransparent.value = true
+
 })
+
 
 const isHeaderTransparent = useState('isHeaderTransparent')
-
-onMounted(() => {
-    isHeaderTransparent.value = true
-})
 
 onUnmounted(() => {
     isHeaderTransparent.value = false
 })
+
 
 
 </script>
@@ -81,5 +100,22 @@ onUnmounted(() => {
         column-count: 1;
         max-width: 100%;
     }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader {
+    border-top-color: #3498db;
+    border-left-color: #3498db;
+    border-bottom-color: #3498db;
+    animation: spin 1s infinite linear;
 }
 </style>

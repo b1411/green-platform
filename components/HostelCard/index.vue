@@ -3,7 +3,8 @@
         <NuxtLink :to="`/hostels/${id}`">
             <div class="flex flex-col justify-between items-center bg-white rounded-lg shadow-lg p-4">
                 <div class="flex flex-col justify-between items-center">
-                    <img :src="images[0].image" :alt="name" class="w-full h-48 object-cover rounded-lg shadow-lg" />
+                    <img :src="images[0]" :alt="name"
+                        class="w-full h-48 object-cover rounded-lg shadow-lg" />
                     <h2 class="text-xl font-bold text-gray-800 mt-4">{{ name }}</h2>
                 </div>
                 <div class="flex flex-col justify-between items-start w-full mt-4">
@@ -41,11 +42,12 @@ let { id, name, images, description, address, price, square } = props.hostel
     width: 100%;
 }
 
-.info-title, .info-value {
+.info-title,
+.info-value {
     white-space: nowrap;
 }
 
-.info-title{ 
+.info-title {
     font-weight: 700;
     color: #4B5563;
 }
@@ -56,7 +58,8 @@ let { id, name, images, description, address, price, square } = props.hostel
     border-bottom: 4px dotted #00000021;
     content: '';
     display: block;
-    height: 10px; /* Высота элемента */
-    position: relative; /* Сдвигаем границу вниз */
-}
-</style>
+    height: 10px;
+    /* Высота элемента */
+    position: relative;
+    /* Сдвигаем границу вниз */
+}</style>

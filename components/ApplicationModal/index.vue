@@ -30,28 +30,46 @@
 
 <script setup>
 async function fetchApplication(formData) {
-    const { data } = await useFetch('http://127.0.0.1:8000/api/hostel-request/', {
-        method: "POST", body: JSON.stringify(formData), headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    return data
+    async function retrieveHostel(hostelId) {
+        const Parse = useParse();
+        const hostelQuery = new Parse.Query("Hostels");
+        const res = await hostelQuery.equalTo("objectId", hostelId).first();
+        return res
+    }
+    const Parse = useParse();
+    const Application = Parse.Object.extend("HostelApplications");
+    const application = new Application();
+    application.set("name", formData.name);
+    application.set("surname", formData.surname);
+    application.set("barcode", formData.barcode);
+    application.set("phone", formData.phone);
+    application.set("hostel", (await retrieveHostel(formData.hostel)).toPointer());
+    try {
+        await application.save();
+        return true;
+    } catch (error) {
+        console.log(error)
+        return false;
+    }
 }
 
 let isApplicattionLoading = ref(false);
 
 function sendApplication(e) {
+    const route = useRoute()
     e.preventDefault()
     let formData = {
         name: e.target[0].value,
         surname: e.target[1].value,
         barcode: e.target[2].value,
         phone: e.target[3].value,
-        hostel: e.target[4].value
+        hostel: route.params.hostelId
     }
-    fetchApplication(formData).then(() => {
+    fetchApplication(formData).then((res) => {
         isApplicattionLoading.value = true
+        if (!res) {
+            Promise.reject('Error')
+        }
     }).then(() => {
         document.getElementById('application_modal').close()
         useNuxtApp().$toast.success('Заявка успешно отправлена')

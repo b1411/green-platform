@@ -11,6 +11,9 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.11.0",
+    "@types/events": "^3.0.3",
+    "@types/node": "^20.11.6",
+    "@types/parse": "^3.0.9",
     "daisyui": "^4.6.0",
     "nuxt": "^3.9.3",
     "vue": "^3.4.14",
@@ -22,6 +25,8 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^3.0.5",
+    "events": "^3.3.0",
+    "parse": "^4.2.0",
     "vue-final-modal": "^4.5.3",
     "vue3-toastify": "^0.2.1"
   }
