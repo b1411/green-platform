@@ -1,5 +1,7 @@
 <template>
-    <div class="page-container pt-[189px]" >
+    <div class="page-container pt-[189px]" style="
+        max-width: 1140px;
+    ">
         <div class="w-full h-full flex md:flex-row flex-col mb-10" v-if="isDataLoaded">
             <div class="left-section flex-row flex-wrap md:w-1/2 w-full">
                 <div class="info-section w-full bg-gray-100">
@@ -24,13 +26,17 @@
                     <p>{{ description }}</p>
                 </div>
             </div>
-            <div class="image-section md:w-1/2 w-full">
-                <img :src="images[0]" alt="Hostel Image">
-            </div>
+            <Carousel class="image-section md:w-1/2 w-full h-fit">
+                <Slide v-for="image in images" :key="image">
+                    <img :src="image" />
+                </Slide>
+                <template #addons>
+                    <Navigation />
+                </template>
+            </Carousel>
         </div>
         <div v-else class="h-[500px] flex justify-center items-center">
-            <div
-                class=" loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64">
+            <div class=" loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64">
             </div>
         </div>
         <div class="flex w-full" v-if="isDataLoaded">
@@ -43,6 +49,7 @@
 
 <script setup>
 import { HostelInfo } from '~/utils/hostels/HostelClass';
+import 'vue3-carousel/dist/carousel.css'
 const route = useRoute()
 
 let data = reactive({})
@@ -84,7 +91,7 @@ function openModalForm() {
 
 </script>
 
-<style scoped>
+<style>
 .left-section {
     flex: 1;
     /* Takes as much space as possible */
@@ -120,5 +127,11 @@ p {
     @apply text-gray-500;
     line-height: 1.5;
     /* Improves readability */
+}
+
+.carousel__prev,
+.carousel__next {
+    color: #1C7E66;
+    width: 2rem;
 }
 </style>
