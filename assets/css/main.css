@@ -1,0 +1,16 @@
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader {
+    border-top-color: #1C7E66;
+    border-left-color: #1C7E66;
+    border-bottom-color: #1C7E66;
+    animation: spin 1s infinite linear;
+}

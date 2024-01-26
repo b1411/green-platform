@@ -6,6 +6,7 @@
 </template>
 
 <script setup>
+import "@/assets/css/main.css"
 let isDrawerOpen = useState('isDrawerOpen', () => false)
 
 useHead({

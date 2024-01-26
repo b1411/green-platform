@@ -102,20 +102,4 @@ onUnmounted(() => {
     }
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.loader {
-    border-top-color: #3498db;
-    border-left-color: #3498db;
-    border-bottom-color: #3498db;
-    animation: spin 1s infinite linear;
-}
 </style>
