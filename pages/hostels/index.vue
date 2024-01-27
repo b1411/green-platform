@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div v-else class="flex flex-row justify-center items-center h-[500px]">
-                <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64"></div>
+                <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32"></div>
             </div>
         </div>
     </div>
@@ -43,22 +43,22 @@ async function retrieveHostelsInfo() {
 
 }
 
+
 onBeforeMount(async () => {
     await retrieveHostelsInfo()
     isHostelDataLoaded.value = true
-    console.log(hostels)
-    isHeaderTransparent.value = true
-
 })
 
 
 const isHeaderTransparent = useState('isHeaderTransparent')
+isHeaderTransparent.value = true
 
 onUnmounted(() => {
     isHeaderTransparent.value = false
 })
 
-
+let title = useState('title')
+title.value = 'Хостелы'
 
 </script>
 

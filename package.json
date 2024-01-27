@@ -10,12 +10,15 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@nuxtjs/tailwindcss": "^6.11.0",
     "@types/events": "^3.0.3",
     "@types/node": "^20.11.6",
     "@types/parse": "^3.0.9",
     "daisyui": "^4.6.0",
     "nuxt": "^3.9.3",
+    "rollup-plugin-polyfill-node": "^0.13.0",
     "vue": "^3.4.14",
     "vue-router": "^4.2.5"
   },

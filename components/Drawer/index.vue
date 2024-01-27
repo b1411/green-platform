@@ -5,7 +5,9 @@
                 class="text-black text-xl absolute right-2 top-2" />
             <div class="flex flex-col items-center justify-center">
                 <div class="flex flex-col items-center justify-center">
-                    <Logo />
+                    <KeepAlive>
+                        <Logo />
+                    </KeepAlive>
                     <ul class=" flex flex-col">
                         <li v-for="link in links" :key="link.name" class="inline-block mb-2 last:mb-0">
                             <NuxtLink :href="link.href">{{ link.name }}</NuxtLink>

@@ -1,9 +1,9 @@
 <template>
-    <div class="page-container pt-[189px]" style="
+    <div class="page-container pt-[119px] md:pt-[139px] pb-[50px]" style="
         max-width: 1140px;
     ">
-        <div class="w-full h-full flex md:flex-row flex-col mb-10" v-if="isDataLoaded">
-            <div class="left-section flex-row flex-wrap md:w-1/2 w-full">
+        <div class="w-full h-full flex md:flex-row flex-col mb-10">
+            <div class="left-section flex-row flex-wrap md:w-1/2 w-full flex">
                 <div class="info-section w-full bg-gray-100">
                     <h1 class="uppercase">{{ name }}</h1>
                     <div class="hostel-info">
@@ -35,11 +35,11 @@
                 </template>
             </Carousel>
         </div>
-        <div v-else class="h-[500px] flex justify-center items-center">
-            <div class=" loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64">
+        <!-- <div v-else class="h-[500px] mt-[89px] flex justify-center items-center">
+            <div class=" loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32">
             </div>
-        </div>
-        <div class="flex w-full" v-if="isDataLoaded">
+        </div> -->
+        <div class="flex w-full">
             <button class="mx-auto btn w-[250px] btn-primary" v-on:click="openModalForm">Оставить заявку</button>
             <ApplicationModal />
         </div>
@@ -52,42 +52,18 @@ import { HostelInfo } from '~/utils/hostels/HostelClass';
 import 'vue3-carousel/dist/carousel.css'
 const route = useRoute()
 
-let data = reactive({})
+let data = useState('currentHostel');
 
-let name = ref('')
-let images = ref([])
-let description = ref('')
-let address = ref('')
-let price = ref('')
-let square = ref('')
-let isDataLoaded = ref(false)
-
-async function retrieveHostelInfo() {
-    const Parse = useParse();
-    const hostelQuery = new Parse.Query("Hostels");
-    const res = await hostelQuery.equalTo("objectId", route.params.hostelId).first();
-    const hostelData = new HostelInfo(res)
-    await hostelData.getImages()
-    data = { ...hostelData }
-    name.value = data.name
-    images.value = data.images
-    description.value = data.description
-    address.value = data.address
-    price.value = data.price
-    square.value = data.square
-
-}
-
-onBeforeMount(async () => {
-    await retrieveHostelInfo()
-    isDataLoaded.value = true
-})
-
-
+let { name, images, description, address, price, square } = data.value
 
 function openModalForm() {
     document.getElementById('application_modal').showModal()
 }
+
+
+let title = useState('title')
+
+title.value = name.toUpperCase()
 
 </script>
 
@@ -96,7 +72,6 @@ function openModalForm() {
     flex: 1;
     /* Takes as much space as possible */
     margin-right: 20px;
-    display: flex;
 }
 
 .info-section,

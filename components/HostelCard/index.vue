@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NuxtLink :to="`/hostels/${id}`">
+        <NuxtLink :to="`/hostels/${id}`" @click="setCurrentHostel">
             <div class="flex flex-col justify-between items-center bg-white rounded-lg shadow-lg p-4">
                 <div class="flex flex-col justify-between items-center">
                     <img :src="images[0]" :alt="name"
@@ -32,6 +32,11 @@
 <script setup>
 const props = defineProps(['hostel'])
 let { id, name, images, description, address, price, square } = props.hostel
+
+function setCurrentHostel() {
+    let currentHostel = useState('currentHostel');
+    currentHostel.value = props.hostel;
+}
 </script>
 
 <style>
